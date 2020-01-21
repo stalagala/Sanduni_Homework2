@@ -16,16 +16,20 @@ setwd("/Users/owner1/Desktop/bi612/Homework2/Homework 2")
 ##Question 1: Shrimping and oil spill -> Has the mean shrimp catch in the Gulf changed between the 2009 and 2010 seasons?
 
 **Part a : Hypotheses**
+
 H0: There is no difference between the mean catch from 2009 and the mean catch from 2010
 
 HA:The mean catch from 2009 and the mean catch from 2010 are different. 
 
+
 **Part b: histogram**
+
 Note: since we are comparing the difference between the 2 years and want to see if the difference is normally distributed, I made a histogram of the difference rather than 2 histograms for the 2 years. 
 ```{r}
 Catch<-read.csv("FishCatch.csv")
 hist(Catch$Difference, main="Differences between fish caught in 2009 and 2010",xlab="Catch (tonnes)", ylab="frequency", col = 'yellow')
 ```
+
 
 **Part c: Type of test**
 ```{r}
@@ -33,20 +37,27 @@ shapiro.test(Catch$Difference)
 ```
 The differences are normally distributed (p>0.05 in Shapiro-Wilk test). This can also be seen by looking at the histogram of the differences (as it shows a bell shape curve). I assume the sample is random. Furthermore, these are the same lake spots in 2 different years so I will do a **paired t-test** as each lake in 2009 and 2010 has everything (almost - we assume) in common except for the oil spill differences. The question asks if there is a change (does not ask in what direction), so I will run a **two-tailed test**.
 
+
 **Part d: Run test**
+
+Note: for the differences, I did 2010 - 2009, so the values I have are positive. 
 ```{r}
 TwoTailedT1<- t.test(Catch$CatchBefore, Catch$CatchAfter, paired=TRUE, alternative = "two.sided")
 TwoTailedT1
 ```
 **Part e: Critical and observed t**
-Observed test statistic is calculated above (6.3803). The Critical value is shown below (1.770933)
+Observed test statistic is calculated above **(6.3803)**. The Critical values for the two tails are calculated below (2.160369 and -2.160369), but the critical value we are concerned about for this (because the test statistic is positive) **2.160369**. 
 ```{r}
-CriticalValueQ1 <- qt(0.95,13)
-CriticalValueQ1
+CriticalValueQ1.1 <- qt(0.975,13)
+CriticalValueQ1.1
+
+CriticalValueQ1.2 <- qt(0.025,13)
+CriticalValueQ1.2
 ```
 
 **Part f: Conclusion**
-The observed test statistic is further from zero than the critical value. Furthermore, the samples from the 2 years are significantly different because the p-value is 2.415e-05. Therefore we can **reject the null hypothesis** that the catch from 2009 and 2010 are not different, as catch in the Gulf seemed to have significantly changed between 2009 (before oil spill) and 2010 (after oil spill).
+The observed test statistic is further from zero than the critical value. Furthermore, the samples from the 2 years are significantly different because the p-value is 2.415e-05. Therefore we can **reject the null hypothesis** that the catch from 2009 and 2010 are not different, as catch in the Gulf seemed to have significantly changed between 2009 and 2010 (Looking at the data and the output we also get the idea that the "change" from 2009 to 2010 is a decrease in catch - positive test statistic and the catch recorded is always lower in 2010). 
+
 
 ------------------------------------------------------------------------------
 
@@ -76,7 +87,7 @@ OneTailedT2
 ```
 
 **Part e: Critical and observed t**
-The observed test statistic value can be seen in the above question's output (0.80178). The critical value is shown below (1.833113). 
+The observed test statistic value can be seen in the above question's output **(0.80178)**. The critical value is shown below **(1.833113)** and since it is a one tailed test I only calculated one critical value. 
 ```{r}
 CriticalValueQ2 <- qt(0.95,9)
 CriticalValueQ2
@@ -116,16 +127,19 @@ t.test(FishFood$Carnivorous, FishFood$Vegetarian, alternative = "two.sided")
 ```
 
 **Part e: Critical and observed t**
-The observed value of the test statistic is seen in the above output (12.237) and the critical value is shown below (1.701419).
+The observed value of the test statistic is seen in the above output **(12.237)** and the critical values are shown below (2.048864 and -2.048864), but we are only interested in the **2.048864** critical value for this because the observed test statistic is also positive.
 ```{r}
-CriticalValueQ3 <- qt(0.95,27.862)
-CriticalValueQ3
+CriticalValueQ3.1 <- qt(0.975,27.862)
+CriticalValueQ3.1
+
+CriticalValueQ3.2 <- qt(0.025,27.862)
+CriticalValueQ3.2
 ```
 
 
 **Part f: Conclusion**
 
-The observed test statistic (12.237) is further from zero than the critical value (1.701419). Furthermore, the p value is less than 0.05. Therefore we can **reject the null hypothesis** that the growth rate of the fish under the two diets are not different (this means that there is some difference in the growth rate by altering the fish diet). 
+The observed test statistic (12.237) is further from zero than the critical value (1.701419). Furthermore, the p value is less than 0.05. Therefore we can **reject the null hypothesis** that the growth rate of the fish under the two diets are not different. Therefore, there is some difference in the growth rate by altering the fish diet (specifically if we look at the data we see carnivorous diet shows higher growth than vegetarian diet, and this is also evident from the positive observed test statistic). 
 
 -------------------------------------------------------------------------------
 
@@ -156,7 +170,7 @@ Testing
 ```
 
 **Part e: critical and observed value**
-The observed test statistic value is shown above (89.253). the Critical value is calculated below (2.919986)
+The observed test statistic value is shown above **(89.253)**. the Critical value is calculated below **(2.919986)**. 
 ```{r}
 CriticalValueQ4 = qt(0.95,2)
 CriticalValueQ4
